@@ -20,18 +20,15 @@ public class CallHippoClient {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    // Helper to format date if needed (returns as is for now)
     private String formatDate(String date) {
         return date;
     }
 
-    // Fetch call logs with query parameters
     public ResponseEntity<String> getCallLogs(String fromDate, String toDate, String msisdn) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("apiToken", apiKey);
 
-        // Prepare JSON body
         StringBuilder requestJson = new StringBuilder();
         requestJson.append("{")
                 .append("\"skip\": \"0\", ")
@@ -49,7 +46,6 @@ public class CallHippoClient {
         return restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
     }
 
-    // Fetch and parse call logs into objects
     public List<CallLogResponse> getCallLogsAsObjects(String fromDate, String toDate, String msisdn) throws Exception {
         ResponseEntity<String> response = getCallLogs(fromDate, toDate, msisdn);
 
@@ -59,11 +55,11 @@ public class CallHippoClient {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(response.getBody());
             JsonNode dataNode = root.path("data");
-            JsonNode callLogsNode = dataNode.path("callLogs"); // <-- FIXED FIELD NAME
+            JsonNode callLogsNode = dataNode.path("callLogs");
 
             if (callLogsNode == null || callLogsNode.isMissingNode() || callLogsNode.isNull() || !callLogsNode.isArray()
                     || callLogsNode.size() == 0) {
-                return List.of(); // Return empty list if no logs
+                return List.of();
             }
 
             return mapper.readValue(

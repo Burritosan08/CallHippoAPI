@@ -7,7 +7,7 @@ public class CallLogResponse {
 
     private String _id;
     private String callSid;
-    private String callType; // "Outgoing" or "Incoming"
+    private String callType;
     private String from;
     private String to;
     private String date;
@@ -18,8 +18,6 @@ public class CallLogResponse {
 
     public CallLogResponse() {
     }
-
-    // Getters and setters for all fields
 
     public String get_id() {
         return _id;

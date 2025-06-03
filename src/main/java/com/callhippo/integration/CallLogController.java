@@ -60,8 +60,8 @@ public class CallLogController {
 
     private String getPhoneNumberByUserId(String userId) {
         Map<String, String> userMap = new HashMap<>();
-        userMap.put("U001", "+917004573138");
-        userMap.put("U002", "+911234567890");
+        userMap.put("U001", "+910000000000");
+        userMap.put("U002", "+910000000000");
         return userMap.get(userId);
     }
 }
